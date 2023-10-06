@@ -1,11 +1,8 @@
 name: tests
-#on:
-  #pull_request:
-  #push:
-  #  branches: [ main ]
-
-  #schedule:
-  #- cron: '25 08 * * *'
+on:
+  pull_request:
+  push:
+    branches: [ main ]
 
   workflow_dispatch:
     inputs:
