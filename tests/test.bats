@@ -13,8 +13,7 @@ setup() {
 
 health_checks() {
   # Do something useful here that verifies the add-on
-  # ddev exec "curl -s elasticsearch:9200" | grep "${PROJNAME}-elasticsearch"
-  # ddev exec "curl -s https://localhost:443/"
+  ddev wp-rename-tables-prefix --help
 }
 
 teardown() {
