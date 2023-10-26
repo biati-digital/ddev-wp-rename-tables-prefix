@@ -4,8 +4,8 @@
 ## Author: Biati Digital https://www.biati.digital
 ## Description: Rename your database tables prefix
 ## Usage: wp-rename-tables-prefix
-## Example: "ddev wp-rename-tables-prefix --from=old_ --to=new_ --silent=false"
-## Flags: [{"Name":"from","Type":"string","Usage":"the prefix to replace, not mandatory"},{"Name":"to","Type":"string","Usage":"the new prefix to use in tables, mandatory"},{"Name":"silent","Type":"bool","Usage":"display the process output"}]
+## Example: ddev wp-rename-tables-prefix --from=old_ --to=new_ --silent=false --get=siteurl
+## Flags: [{"Name":"from","Type":"string","Usage":"the prefix to replace, not mandatory"},{"Name":"to","Type":"string","Usage":"the new prefix to use in tables, mandatory"},{"Name":"silent","Type":"bool","NoOptDefVal": "true","Usage":"display the process output"},{"Name":"get","Type":"string","Usage":"get some value from database"}]
 ## ProjectTypes: wordpress
 
 function runDBCommand() {
@@ -45,11 +45,23 @@ if [ -z "$from" ]; then
         echo "Unable to find the old prefix, rerun and provide the old and new prefix."
         exit 1
     else
-        if [ "$silent" != "true" ]; then
+        if [ "$silent" != "true" ] | [ -z "$get" ]; then
             echo "Previous table prefix not provided but extracted from database. Setting from to $from"
         fi
     fi
 fi
+
+# if $get is not empty
+if [ -n "$get" ]; then
+    if [ "$get" == "table_prefix" ] && [ -n "$from" ]; then
+        echo "$from"
+        exit 0
+    fi
+    OPTION=$(runDBCommand "SELECT option_value as '' FROM ${from}options where option_name='${get}';")
+    echo "$OPTION" | xargs
+    exit 0
+fi
+
 
 # if we do not have "from" and "to" exit
 if [ -z "$from" ] || [ -z "$to" ]; then
