@@ -5,8 +5,8 @@ project_files:
 
 # DDEV environment variables can be interpolated into these actions
 post_install_actions:
- - chmod +x .ddev/commands/db/wp-rename-tables-prefix
+ - chmod +x "${DDEV_APPROOT}/.ddev/commands/db/wp-rename-tables-prefix"
  
 # Shell actions that can be done during removal of the add-on
 removal_actions:
-  - rm .ddev/commands/db/wp-rename-tables-prefix
+  - rm "${DDEV_APPROOT}/.ddev/commands/db/wp-rename-tables-prefix"
