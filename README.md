@@ -3,7 +3,15 @@ A db command for DDEV to rename tables prefix of WordPress installations
 
 ### Installation:
 
+For DDEV v1.23.5 or above run
+
+```sh
+ddev add-on get biati-digital/ddev-wp-rename-tables-prefix
 ```
+
+For earlier versions of DDEV run
+
+```sh
 ddev get biati-digital/ddev-wp-rename-tables-prefix
 ```
 
